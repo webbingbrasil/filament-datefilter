@@ -1,0 +1,34 @@
+{
+    "name": "webbingbrasil/filament-datefilter",
+    "description": "Date filter component for filament tables.",
+    "keywords": [
+        "laravel",
+        "filament",
+        "filter"
+    ],
+    "homepage": "https://github.com/webbingbrasil/filament-datefilter",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Danilo Andrade",
+            "email": "danilo@webbingbrasil.com.br",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": "^8.0",
+        "filament/tables": "^2.15"
+    },
+    "require-dev": {
+    },
+    "autoload": {
+        "psr-4": {
+            "Webbingbrasil\\FilamentDateFilter\\": "src"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
