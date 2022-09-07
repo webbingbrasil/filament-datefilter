@@ -50,15 +50,18 @@ class DateFilter extends BaseFilter
                     return [];
                 }
 
+                /** @var string $displayFormat */
+                $displayFormat = $this->evaluate($this->displayFormat);
+
                 if (!$this->range) {
-                    $label = Carbon::parse($state['value'])->format($this->displayFormat);
+                    $label = Carbon::parse($state['value'])->format($displayFormat);
                     return ["{$this->getIndicator()}: {$label}"];
                 }
 
                 $format = fn(string $field) => $state[$field]
                     ? [
                         $this->labels[$field],
-                        Carbon::parse($state[$field])->format($this->displayFormat)
+                        Carbon::parse($state[$field])->format($displayFormat)
                     ] : [];
 
                 $label = implode(' ', array_filter([
