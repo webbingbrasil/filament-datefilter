@@ -27,6 +27,8 @@ class DateFilter extends BaseFilter
 
     protected CarbonInterface | string | Closure | null $minDate = null;
 
+    protected string | Closure | null $displayFormat = 'M j, Y';
+
     protected string | Closure | null $timezone = null;
 
     protected array $labels = [
@@ -38,6 +40,8 @@ class DateFilter extends BaseFilter
     {
         parent::setUp();
 
+        $this->displayFormat = config('tables.date_format', $this->displayFormat);
+
         $this
             ->useColumn($this->getName())
             ->indicateUsing(function (array $state): array {
@@ -46,7 +50,8 @@ class DateFilter extends BaseFilter
                     return [];
                 }
 
-                $displayFormat = config('tables.date_format', 'M j, Y');
+                /** @var string $displayFormat */
+                $displayFormat = $this->evaluate($this->displayFormat);
 
                 if (!$this->range) {
                     $label = Carbon::parse($state['value'])->format($displayFormat);
@@ -194,6 +199,13 @@ class DateFilter extends BaseFilter
         return $this;
     }
 
+    public function displayFormat(string | Closure | null $format): static
+    {
+        $this->displayFormat = $format;
+
+        return $this;
+    }
+
     public function timezone(string | Closure | null $timezone): static
     {
         $this->timezone = $timezone;
@@ -214,6 +226,7 @@ class DateFilter extends BaseFilter
                 Forms\Components\DatePicker::make('value')
                     ->closeOnDateSelection()
                     ->label($this->getLabel())
+                    ->displayFormat($this->displayFormat)
                     ->maxDate($this->maxDate)
                     ->minDate($this->minDate)
                     ->timezone($this->timezone)
@@ -230,6 +243,7 @@ class DateFilter extends BaseFilter
                     Forms\Components\DatePicker::make('from')
                         ->closeOnDateSelection()
                         ->label($this->labels['from'])
+                        ->displayFormat($this->displayFormat)
                         ->timezone($this->timezone)
                         ->minDate($this->minDate)
                         ->maxDate(fn($get) => $get('until') ?? $this->maxDate),
@@ -237,6 +251,7 @@ class DateFilter extends BaseFilter
                     Forms\Components\DatePicker::make('until')
                         ->closeOnDateSelection()
                         ->label($this->labels['until'])
+                        ->displayFormat($this->displayFormat)
                         ->timezone($this->timezone)
                         ->minDate(fn($get) => $get('from') ?? $this->minDate)
                         ->maxDate($this->maxDate),
