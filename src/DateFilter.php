@@ -5,7 +5,6 @@ namespace Webbingbrasil\FilamentDateFilter;
 use Carbon\CarbonInterface;
 use Closure;
 use Filament\Forms;
-use Filament\Support\Concerns\Configurable;
 use Filament\Tables\Filters\BaseFilter;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Arr;
@@ -13,8 +12,6 @@ use Illuminate\Support\Carbon;
 
 class DateFilter extends BaseFilter
 {
-    use Configurable;
-
     protected string $column;
 
     protected string $operator = '=';
