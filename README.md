@@ -15,7 +15,7 @@ composer require webbingbrasil/filament-datefilter
 Date filters allow you to quickly create a filter that allows the user to select a date.
 
 ```php
-use Webbingbrasil\FilamentDateFilter;
+use Webbingbrasil\FilamentDateFilter\DateFilter;
 
 DateFilter::make('created_at')
     ->label(__('Created At'))
@@ -27,7 +27,7 @@ DateFilter::make('created_at')
 Another common use case is to filter by a date range. You can do this with `range()` method:
 
 ```php
-use Webbingbrasil\FilamentDateFilter;
+use Webbingbrasil\FilamentDateFilter\DateFilter;
 
 DateFilter::make('created_at')
     ->label(__('Created At'))
@@ -43,7 +43,7 @@ If you need to use a different column name than the one you pass to the `make()`
 
 
 ```php
-use Webbingbrasil\FilamentDateFilter;
+use Webbingbrasil\FilamentDateFilter\DateFilter;
 
 DateFilter::make('created_at')
     ->useColumn('updated_at')
@@ -54,7 +54,7 @@ DateFilter::make('created_at')
 You can set From/Until label globally using `configureUsing()` method in a service provider:
 
 ```php
-use Webbingbrasil\FilamentDateFilter;
+use Webbingbrasil\FilamentDateFilter\DateFilter;
 
 DateFilter::configureUsing(fn ($filter) => $filter->fromLabel(__('From'))->untilLabel(__('Until')));
 ```
