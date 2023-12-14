@@ -24,6 +24,10 @@ class DateFilter extends BaseFilter
 
     protected CarbonInterface | string | Closure | null $minDate = null;
 
+    protected CarbonInterface | string | Closure | null $defaultFrom = null;
+
+    protected CarbonInterface | string | Closure | null $defaultUntil = null;
+
     protected string | Closure | null $displayFormat = 'M j, Y';
 
     protected string | Closure | null $timezone = null;
@@ -210,6 +214,18 @@ class DateFilter extends BaseFilter
         return $this;
     }
 
+    public function defaultFrom(CarbonInterface | string | Closure | null $date): static
+    {
+        $this->defaultFrom = $date;
+        return $this;
+    }
+
+    public function defaultUntil(CarbonInterface | string | Closure | null $date): static
+    {
+        $this->defaultUntil = $date;
+        return $this;
+    }
+
     public function getFormSchema(): array
     {
         $schema = $this->evaluate($this->formSchema);
@@ -243,7 +259,8 @@ class DateFilter extends BaseFilter
                         ->displayFormat($this->displayFormat)
                         ->timezone($this->timezone)
                         ->minDate($this->minDate)
-                        ->maxDate(fn($get) => $get('until') ?? $this->maxDate),
+                        ->maxDate(fn($get) => $get('until') ?? $this->maxDate)
+                        ->default($this->defaultFrom),
 
                     Forms\Components\DatePicker::make('until')
                         ->closeOnDateSelection()
@@ -251,7 +268,8 @@ class DateFilter extends BaseFilter
                         ->displayFormat($this->displayFormat)
                         ->timezone($this->timezone)
                         ->minDate(fn($get) => $get('from') ?? $this->minDate)
-                        ->maxDate($this->maxDate),
+                        ->maxDate($this->maxDate)
+                        ->default($this->defaultUntil),
                 ])
         ];
     }
